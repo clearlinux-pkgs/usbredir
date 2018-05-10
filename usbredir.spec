@@ -4,7 +4,7 @@
 #
 Name     : usbredir
 Version  : 0.7.1
-Release  : 12
+Release  : 13
 URL      : http://spice-space.org/download/usbredir/usbredir-0.7.1.tar.bz2
 Source0  : http://spice-space.org/download/usbredir/usbredir-0.7.1.tar.bz2
 Summary  : usbredirhost library
