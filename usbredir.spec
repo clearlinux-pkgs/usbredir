@@ -4,7 +4,7 @@
 #
 Name     : usbredir
 Version  : 0.7.1
-Release  : 13
+Release  : 14
 URL      : http://spice-space.org/download/usbredir/usbredir-0.7.1.tar.bz2
 Source0  : http://spice-space.org/download/usbredir/usbredir-0.7.1.tar.bz2
 Summary  : usbredirhost library
@@ -12,7 +12,8 @@ Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.0+ LGPL-2.1
 Requires: usbredir-bin
 Requires: usbredir-lib
-Requires: usbredir-doc
+Requires: usbredir-license
+Requires: usbredir-man
 BuildRequires : pkgconfig(libusb-1.0)
 
 %description
@@ -25,6 +26,8 @@ of this protocol.
 %package bin
 Summary: bin components for the usbredir package.
 Group: Binaries
+Requires: usbredir-license
+Requires: usbredir-man
 
 %description bin
 bin components for the usbredir package.
@@ -41,37 +44,56 @@ Provides: usbredir-devel
 dev components for the usbredir package.
 
 
-%package doc
-Summary: doc components for the usbredir package.
-Group: Documentation
-
-%description doc
-doc components for the usbredir package.
-
-
 %package lib
 Summary: lib components for the usbredir package.
 Group: Libraries
+Requires: usbredir-license
 
 %description lib
 lib components for the usbredir package.
+
+
+%package license
+Summary: license components for the usbredir package.
+Group: Default
+
+%description license
+license components for the usbredir package.
+
+
+%package man
+Summary: man components for the usbredir package.
+Group: Default
+
+%description man
+man components for the usbredir package.
 
 
 %prep
 %setup -q -n usbredir-0.7.1
 
 %build
-%configure --disable-static
-make V=1  %{?_smp_mflags}
-
-%check
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
-export no_proxy=localhost
+export no_proxy=localhost,127.0.0.1,0.0.0.0
+export LANG=C
+export SOURCE_DATE_EPOCH=1533653584
+%configure --disable-static
+make  %{?_smp_mflags}
+
+%check
+export LANG=C
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
+export SOURCE_DATE_EPOCH=1533653584
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/doc/usbredir
+cp COPYING %{buildroot}/usr/share/doc/usbredir/COPYING
+cp COPYING.LIB %{buildroot}/usr/share/doc/usbredir/COPYING.LIB
 %make_install
 
 %files
@@ -84,13 +106,23 @@ rm -rf %{buildroot}
 %files dev
 %defattr(-,root,root,-)
 /usr/include/*.h
-/usr/lib64/*.so
-/usr/lib64/pkgconfig/*.pc
-
-%files doc
-%defattr(-,root,root,-)
-%doc /usr/share/man/man1/*
+/usr/lib64/libusbredirhost.so
+/usr/lib64/libusbredirparser.so
+/usr/lib64/pkgconfig/libusbredirhost.pc
+/usr/lib64/pkgconfig/libusbredirparser-0.5.pc
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/*.so.*
+/usr/lib64/libusbredirhost.so.1
+/usr/lib64/libusbredirhost.so.1.0.0
+/usr/lib64/libusbredirparser.so.1
+/usr/lib64/libusbredirparser.so.1.0.0
+
+%files license
+%defattr(-,root,root,-)
+/usr/share/doc/usbredir/COPYING
+/usr/share/doc/usbredir/COPYING.LIB
+
+%files man
+%defattr(-,root,root,-)
+/usr/share/man/man1/usbredirserver.1
