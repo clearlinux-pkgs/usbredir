@@ -4,7 +4,7 @@
 #
 Name     : usbredir
 Version  : 0.8.0
-Release  : 15
+Release  : 16
 URL      : http://spice-space.org/download/usbredir/usbredir-0.8.0.tar.bz2
 Source0  : http://spice-space.org/download/usbredir/usbredir-0.8.0.tar.bz2
 Summary  : usbredirparser library
