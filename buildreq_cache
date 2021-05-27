@@ -1,0 +1,4 @@
+0.10.0
+libusb-dev
+pkgconfig(gio-unix-2.0)
+pkgconfig(libusb-1.0)
