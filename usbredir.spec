@@ -6,7 +6,7 @@
 #
 Name     : usbredir
 Version  : 0.10.0
-Release  : 18
+Release  : 19
 URL      : http://spice-space.org/download/usbredir/usbredir-0.10.0.tar.xz
 Source0  : http://spice-space.org/download/usbredir/usbredir-0.10.0.tar.xz
 Source1  : http://spice-space.org/download/usbredir/usbredir-0.10.0.tar.xz.sig
@@ -84,7 +84,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1622129178
+export SOURCE_DATE_EPOCH=1622131457
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -101,6 +101,9 @@ mkdir -p %{buildroot}/usr/share/package-licenses/usbredir
 cp %{_builddir}/usbredir-0.10.0/COPYING %{buildroot}/usr/share/package-licenses/usbredir/4cc77b90af91e615a64ae04893fdffa7939db84c
 cp %{_builddir}/usbredir-0.10.0/COPYING.LIB %{buildroot}/usr/share/package-licenses/usbredir/3704f4680301a60004b20f94e0b5b8c7ff1484a9
 DESTDIR=%{buildroot} ninja -C builddir install
+## install_append content
+mv %{buildroot}/usr/sbin/* %{buildroot}/usr/bin
+## install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -108,7 +111,7 @@ DESTDIR=%{buildroot} ninja -C builddir install
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/usbredirect
-/usr/sbin/usbredirserver
+/usr/bin/usbredirserver
 
 %files dev
 %defattr(-,root,root,-)
