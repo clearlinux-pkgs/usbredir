@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x97D9123DE37A484F (toso@posteo.net)
 #
 Name     : usbredir
-Version  : 0.11.0
-Release  : 20
-URL      : https://spice-space.org/download/usbredir/usbredir-0.11.0.tar.xz
-Source0  : https://spice-space.org/download/usbredir/usbredir-0.11.0.tar.xz
-Source1  : https://spice-space.org/download/usbredir/usbredir-0.11.0.tar.xz.sig
+Version  : 0.12.0
+Release  : 21
+URL      : https://spice-space.org/download/usbredir/usbredir-0.12.0.tar.xz
+Source0  : https://spice-space.org/download/usbredir/usbredir-0.12.0.tar.xz
+Source1  : https://spice-space.org/download/usbredir/usbredir-0.12.0.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.0+ LGPL-2.1
@@ -18,8 +18,9 @@ Requires: usbredir-lib = %{version}-%{release}
 Requires: usbredir-license = %{version}-%{release}
 Requires: usbredir-man = %{version}-%{release}
 BuildRequires : buildreq-meson
+BuildRequires : glib-dev
 BuildRequires : libusb-dev
-BuildRequires : pkgconfig(gio-unix-2.0)
+BuildRequires : pkgconfig(glib-2.0)
 BuildRequires : pkgconfig(libusb-1.0)
 
 %description
@@ -76,15 +77,15 @@ man components for the usbredir package.
 
 
 %prep
-%setup -q -n usbredir-0.11.0
-cd %{_builddir}/usbredir-0.11.0
+%setup -q -n usbredir-0.12.0
+cd %{_builddir}/usbredir-0.12.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1628785760
+export SOURCE_DATE_EPOCH=1637609743
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -101,12 +102,12 @@ export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-meson test -C builddir
+meson test -C builddir --print-errorlogs
 
 %install
 mkdir -p %{buildroot}/usr/share/package-licenses/usbredir
-cp %{_builddir}/usbredir-0.11.0/COPYING %{buildroot}/usr/share/package-licenses/usbredir/4cc77b90af91e615a64ae04893fdffa7939db84c
-cp %{_builddir}/usbredir-0.11.0/COPYING.LIB %{buildroot}/usr/share/package-licenses/usbredir/3704f4680301a60004b20f94e0b5b8c7ff1484a9
+cp %{_builddir}/usbredir-0.12.0/COPYING %{buildroot}/usr/share/package-licenses/usbredir/4cc77b90af91e615a64ae04893fdffa7939db84c
+cp %{_builddir}/usbredir-0.12.0/COPYING.LIB %{buildroot}/usr/share/package-licenses/usbredir/3704f4680301a60004b20f94e0b5b8c7ff1484a9
 DESTDIR=%{buildroot} ninja -C builddir install
 ## install_append content
 mv %{buildroot}/usr/sbin/* %{buildroot}/usr/bin
@@ -134,9 +135,9 @@ mv %{buildroot}/usr/sbin/* %{buildroot}/usr/bin
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libusbredirhost.so.1
-/usr/lib64/libusbredirhost.so.1.0.2
+/usr/lib64/libusbredirhost.so.1.0.3
 /usr/lib64/libusbredirparser.so.1
-/usr/lib64/libusbredirparser.so.1.1.0
+/usr/lib64/libusbredirparser.so.1.2.0
 
 %files license
 %defattr(0644,root,root,0755)
